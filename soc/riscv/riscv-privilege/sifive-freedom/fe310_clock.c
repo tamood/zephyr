@@ -14,12 +14,14 @@
 static int fe310_clock_init(struct device *dev)
 {
 	ARG_UNUSED(dev);
-
+#if DT_HAS_COMPAT_STATUS_OKAY(sifive_freedome300prci0)
 	PRCI_REG(PRCI_PLLCFG) = PLL_REFSEL(1) | PLL_BYPASS(1);
 	PRCI_REG(PRCI_PLLDIV) = (PLL_FINAL_DIV_BY_1(1) | PLL_FINAL_DIV(0));
 	PRCI_REG(PRCI_PLLCFG) |= PLL_SEL(1);
 	PRCI_REG(PRCI_HFROSCCFG) &= ~ROSC_EN(1);
+#endif	
 	return 0;
 }
 
 SYS_INIT(fe310_clock_init, PRE_KERNEL_1, CONFIG_PINMUX_INIT_PRIORITY);
+

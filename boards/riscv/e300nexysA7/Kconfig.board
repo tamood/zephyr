@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_E300NEXYSA7
+	bool "e300nexysA7 target"
+	depends on SOC_RISCV_SIFIVE_FREEDOM
