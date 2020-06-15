@@ -24,4 +24,3 @@ static int fe310_clock_init(struct device *dev)
 }
 
 SYS_INIT(fe310_clock_init, PRE_KERNEL_1, CONFIG_PINMUX_INIT_PRIORITY);
-

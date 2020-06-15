@@ -47,7 +47,7 @@ struct gpio_sifive_cfg {
 	struct gpio_driver_config common;
 	uintptr_t            gpio_base_addr;
 	/* multi-level encoded interrupt corresponding to pin 0 */
-	u32_t                gpio_irq_base;
+	uint32_t                gpio_irq_base;
 	sifive_cfg_func_t    gpio_cfg_func;
 };
 
