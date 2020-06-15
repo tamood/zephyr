@@ -69,7 +69,7 @@ static void timer_isr(void *arg)
 	if (!TICKLESS) {
 		uint64_t next = last_count + CYC_PER_TICK;
 
-		if ((s64_t)(next - now) < MIN_DELAY) {
+		if ((int64_t)(next - now) < MIN_DELAY) {
 			next += CYC_PER_TICK;
 		}
 		set_mtimecmp(next);
