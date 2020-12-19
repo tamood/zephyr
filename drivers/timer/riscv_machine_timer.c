@@ -56,7 +56,7 @@ static uint64_t mtime(void)
 #endif
 }
 
-static void timer_isr(const void *arg)
+static void timer_isr(void *arg)
 {
 	ARG_UNUSED(arg);
 
@@ -79,10 +79,8 @@ static void timer_isr(const void *arg)
 	z_clock_announce(IS_ENABLED(CONFIG_TICKLESS_KERNEL) ? dticks : 1);
 }
 
-int z_clock_driver_init(const struct device *device)
+int z_clock_driver_init(struct device *device)
 {
-	ARG_UNUSED(device);
-
 	IRQ_CONNECT(RISCV_MACHINE_TIMER_IRQ, 0, timer_isr, NULL, 0);
 	last_count = mtime();
 	set_mtimecmp(last_count + CYC_PER_TICK);
@@ -110,7 +108,7 @@ void z_clock_set_timeout(int32_t ticks, bool idle)
 
 	k_spinlock_key_t key = k_spin_lock(&lock);
 	uint64_t now = mtime();
-	uint32_t adj, cyc = ticks * CYC_PER_TICK;
+	uint64_t adj, cyc = ticks * CYC_PER_TICK;
 
 	/* Round up to next tick boundary. */
 	adj = (uint32_t)(now - last_count) + (CYC_PER_TICK - 1);
