@@ -8,11 +8,11 @@
 #include <drivers/pinmux.h>
 #include <soc.h>
 
-static int hifive1_pinmux_init(struct device *dev)
+static int hifive1_pinmux_init(const struct device *dev)
 {
 	ARG_UNUSED(dev);
 
-	struct device *p = device_get_binding("pinmux2");
+	const struct device *p = device_get_binding("pinmux2");
 
 	/* UART1 RX */
 	pinmux_pin_set(p, 0, SIFIVE_PINMUX_IOF0);

@@ -43,8 +43,15 @@ MEMORY
  * controller.
  */
 #define SPI_CTRL DT_PARENT(DT_CHOSEN(zephyr_flash))
+
+#ifdef CONFIG_USE_DT_CODE_PARTITION
+#define ROM_BASE (DT_REG_ADDR(DT_CHOSEN(zephyr_code_partition)))
+#define ROM_SIZE (DT_REG_SIZE(DT_CHOSEN(zephyr_code_partition)))
+#else
 #define ROM_BASE DT_REG_ADDR_BY_IDX(SPI_CTRL, 1)
 #define ROM_SIZE DT_REG_SIZE_BY_IDX(SPI_CTRL, 1)
+#endif
+
 #endif
     ROM (rx)  : ORIGIN = ROM_BASE, LENGTH = ROM_SIZE
 #endif

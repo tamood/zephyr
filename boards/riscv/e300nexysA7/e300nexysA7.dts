@@ -1,28 +1,22 @@
 /dts-v1/;
-
 / {
 	#address-cells = <1>;
 	#size-cells = <1>;
-	compatible = "sifive,hifive1";
-	model = "Nexys A7 build";
-	L31: aliases {
-		serial0 = &L11;
-		serial1 = &L12;
+	compatible = "e300NexysA7-dev";
+	model = "e300NexysA7";
+	L35: aliases {
+		serial0 = &L10;
+		serial1 = &L11;
 		led0 = &led0;
-		led1 = &led1;
-		led2 = &led2;
+		pwm-led0 = &ledr;
 		red-pwm-led = &ledr;
 		green-pwm-led = &ledg;
 		blue-pwm-led = &ledb;
-		pwm-led0 = &ledr;
-		pwm-led1 = &ledg;
-		pwm-led2 = &ledb;
-		sw0 = &sw0;
 	};
-	L30: cpus {
+	L34: cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
-		L9: cpu@0 {
+		L5: cpu@0 {
 			clock-frequency = <80000000>;
 			compatible = "sifive,rocket0", "riscv";
 			device_type = "cpu";
@@ -33,42 +27,42 @@
 			reg = <0x0>;
 			riscv,isa = "rv32imac";
 			riscv,pmpregions = <8>;
-			sifive,dtim = <&L8>;
+			sifive,dtim = <&L4>;
 			status = "okay";
 			timebase-frequency = <32768>;
-			L6: interrupt-controller {
+			L2: interrupt-controller {
 				#interrupt-cells = <1>;
 				compatible = "riscv,cpu-intc";
 				interrupt-controller;
 			};
 		};
 	};
-	L29: soc {
+	L33: soc {
 		#address-cells = <1>;
 		#size-cells = <1>;
-		compatible = "freechips,rocketchip-unknown-soc", "simple-bus";
+		compatible = "e300NexysA7-soc", "simple-bus";
 		ranges;
-		L32: aon@10000000 {
+		L26: aon@10000000 {
 			compatible = "sifive,aon0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <113 114>;
 			reg = <0x10000000 0x1000>;
 			reg-names = "control";
 		};
-		L3: clint@2000000 {
+		L7: clint@2000000 {
 			compatible = "riscv,clint0";
-			interrupts-extended = <&L6 3 &L6 7>;
+			interrupts-extended = <&L2 3 &L2 7>;
 			reg = <0x2000000 0x10000>;
 			reg-names = "control";
 		};
-		L4: debug-controller@0 {
+		L8: debug-controller@0 {
 			compatible = "sifive,debug-013", "riscv,debug-013";
 			debug-attach = "jtag";
-			interrupts-extended = <&L6 65535>;
+			interrupts-extended = <&L2 65535>;
 			reg = <0x0 0x1000>;
 			reg-names = "control";
 		};
-		L8: dtim@80000000 {
+		L4: dtim@80000000 {
 			compatible = "sifive,dtim0";
 			reg = <0x80000000 0x4000>;
 			reg-names = "mem";
@@ -77,180 +71,189 @@
 			compatible = "sifive,error0";
 			reg = <0x3000 0x1000>;
 		};
-		L16: gpio@10010000 {
+		L15: gpio@10010000 {
 			#gpio-cells = <2>;
 			clocks = <&L0>;
 			compatible = "sifive,gpio0", "sifive,gpio1";
 			gpio-controller;
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27>;
 			reg = <0x10010000 0x1000>;
 			reg-names = "control";
 			label = "gpio_0";
 		};
-		L17: gpio@10011000 {
+		L16: gpio@10011000 {
 			#gpio-cells = <2>;
 			clocks = <&L0>;
 			compatible = "sifive,gpio0", "sifive,gpio1";
 			gpio-controller;
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48>;
 			reg = <0x10011000 0x1000>;
 			reg-names = "control";
 			label = "gpio_1";
 		};
-		L18: gpio@10012000 {
+		L17: gpio@10012000 {
 			#gpio-cells = <2>;
 			clocks = <&L0>;
 			compatible = "sifive,gpio0", "sifive,gpio1";
 			gpio-controller;
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80>;
 			reg = <0x10012000 0x1000>;
 			reg-names = "control";
 			label = "gpio_2";
 		};
-		L19: gpio@10013000 {
+		L18: gpio@10013000 {
 			#gpio-cells = <2>;
 			clocks = <&L0>;
 			compatible = "sifive,gpio0", "sifive,gpio1";
 			gpio-controller;
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96>;
 			reg = <0x10013000 0x1000>;
 			reg-names = "control";
 			label = "gpio_3";
 		};
-		L23: i2c@10030000 {
-			clocks = <&L0>;
+		L22: i2c@10030000 {
 			compatible = "sifive,i2c0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <109>;
 			reg = <0x10030000 0x1000>;
 			reg-names = "control";
 			label = "i2c_0";
-			#address-cells = < 0x1 >;
-			#size-cells = < 0x0 >;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <80000000>;
 		};
-		L24: i2c@10031000 {
-			clocks = <&L0>;
+		L23: i2c@10031000 {
 			compatible = "sifive,i2c0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <110>;
 			reg = <0x10031000 0x1000>;
 			reg-names = "control";
 			label = "i2c_1";
-			#address-cells = < 0x1 >;
-			#size-cells = < 0x0 >;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <80000000>;
 		};
-		L2: interrupt-controller@c000000 {
+		L6: interrupt-controller@c000000 {
 			#interrupt-cells = <1>;
-			compatible = "sifive,plic-1.0.0";
 			interrupt-controller;
-			interrupts-extended = <&L6 11>;
-			reg = < 0xc000000 0x2000 0xc002000 0x1fe000 0xc200000 0x3e00000 >;
-			reg-names = "prio", "irq_en", "reg";
+			interrupts-extended = <&L2 11>;
 			riscv,max-priority = <7>;
-			riscv,ndev = <112>;
+			riscv,ndev = <114>;
+			compatible = "sifive,plic-1.0.0";
+			reg = <0xc000000 0x2000 0xc002000 0x1fe000 0xc200000 0x3e00000>;
+			reg-names = "prio", "irq_en", "reg";
 		};
-		L20: pwm@10020000 {
-			clock-frequency = < 80000000 >;
+		L19: pwm@10020000 {
 			compatible = "sifive,pwm0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <97 98 99 100>;
 			reg = <0x10020000 0x1000>;
 			reg-names = "control";
 			sifive,compare-width = <16>;
 			label = "pwm_0";
-			#pwm-cells = < 0x2 >;
+			#pwm-cells = <2>;
+			clock-frequency = <80000000>;
 		};
-		L21: pwm@10021000 {
-			clock-frequency = < 80000000 >;
+		L20: pwm@10021000 {
 			compatible = "sifive,pwm0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <101 102 103 104>;
 			reg = <0x10021000 0x1000>;
 			reg-names = "control";
 			sifive,compare-width = <16>;
 			label = "pwm_1";
-			#pwm-cells = < 0x2 >;
+			#pwm-cells = <2>;
+			clock-frequency = <80000000>;
 		};
-		L22: pwm@10022000 {
-			clock-frequency = < 80000000 >;
+		L21: pwm@10022000 {
 			compatible = "sifive,pwm0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <105 106 107 108>;
 			reg = <0x10022000 0x1000>;
 			reg-names = "control";
 			sifive,compare-width = <16>;
 			label = "pwm_2";
-			#pwm-cells = < 0x2 >;
+			#pwm-cells = <2>;
+			clock-frequency = <80000000>;
 		};
-		L10: rom@10000 {
-			compatible = "sifive,maskrom0";
+		L27: rom@10000 {
+			compatible = "sifive,rom0";
 			reg = <0x10000 0x2000>;
 			reg-names = "mem";
 		};
-		L11: serial@10050000 {
-			clock-frequency = < 80000000 >;
+		L10: serial@10050000 {
 			compatible = "sifive,uart0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <1>;
 			reg = <0x10050000 0x1000>;
 			reg-names = "control";
 			label = "uart_0";
-			current-speed = < 115200 >;
+			current-speed = <115200>;
+			clock-frequency = <80000000>;
 		};
-		L12: serial@10051000 {
-			clock-frequency = < 80000000 >;
+		L11: serial@10051000 {
 			compatible = "sifive,uart0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <2>;
 			reg = <0x10051000 0x1000>;
 			reg-names = "control";
 			label = "uart_1";
-			current-speed = < 115200 >;
+			current-speed = <115200>;
+			clock-frequency = <80000000>;
 		};
-		L13: spi@10040000 {
+		L12: spi@10040000 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			clock-frequency = < 80000000 >;
 			compatible = "sifive,spi0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <3>;
 			reg = <0x10040000 0x1000>;
 			reg-names = "control";
 			label = "spi_0";
+			clock-frequency = <80000000>;
 		};
-		L14: spi@10041000 {
+		L13: spi@10041000 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			clock-frequency = < 80000000 >;
 			compatible = "sifive,spi0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <4>;
 			reg = <0x10041000 0x1000>;
 			reg-names = "control";
 			label = "spi_1";
+			clock-frequency = <80000000>;
 		};
-		L15: spi@10042000 {
+		L14: spi@10042000 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-			clock-frequency = < 80000000 >;
 			compatible = "sifive,spi0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <5>;
-			reg = <0x10042000 0x1000 0x20400000 0xc00000>;
+			reg = <0x10042000 0x1000 0x20000000 0x1000000>;
 			reg-names = "control", "mem";
-			label = "spi_2";
 			status = "disabled";
-			L27: flash@0 {
+			label = "spi_2";
+			clock-frequency = <80000000>;
+			flash0: flash {
 				compatible = "jedec,spi-nor";
+				jedec-id = [96 60 18];
+				size = <16777216>;
+				reg = <0x0>;
 				spi-max-frequency = <50000000>;
-				jedec-id = [ 96 60 18 ];
-				size = < 0x1000000 >;
-				label = "FLASH0";
-				reg = < 0x0 >;
+				label = "FLASH_0";
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = <1>;
+					#size-cells = <1>;
+					txtrom_partition: partition1 {
+						label = "rom-part";
+						reg = <0x20400000 0x10000>;
+					};
+				};
 			};
 		};
 		L0: subsystem_pbus_clock {
@@ -258,65 +261,59 @@
 			clock-frequency = <80000000>;
 			compatible = "fixed-clock";
 		};
-		L25: timer@10060000 {
+		L24: timer@10060000 {
 			compatible = "sifive,timer0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <111>;
 			reg = <0x10060000 0x1000>;
 			reg-names = "control";
 			label = "timer_0";
 		};
-		L26: timer@10061000 {
+		L25: timer@10061000 {
 			compatible = "sifive,timer0";
-			interrupt-parent = <&L2>;
+			interrupt-parent = <&L6>;
 			interrupts = <112>;
 			reg = <0x10061000 0x1000>;
 			reg-names = "control";
 			label = "timer_1";
 		};
 	};
-	chosen {
-		zephyr,console = &L11;
-		zephyr,shell-uart = &L11;
-		zephyr,sram = &L8;
-		zephyr,flash = &L27;
-	};
-	leds {
+	gpioleds {
 		compatible = "gpio-leds";
 		led0: led_0 {
-			gpios = <&L16 19 0>;
-			label = "Blue LED";
+			gpios = <&L15 21 0>;
+			label = "Red LED";
 		};
 		led1: led_1 {
-			gpios = <&L16 20 0>;
+			gpios = <&L15 20 0>;
 			label = "Green LED";
 		};
 		led2: led_2 {
-			gpios = <&L16 21 0>;
-			label = "Red LED";
+			gpios = <&L15 19 0>;
+			label = "Blue LED";
 		};
 	};
 	pwmleds {
 		compatible = "pwm-leds";
-		ledr: led_01 {
-			pwms = <&L20 3 0>;
-			label = "LEDr";
+		ledr: led_r {
+			pwms = <&L19 3 0>;
+			label = "Red PWM LED";
 		};
-		ledg: led_11 {
-			pwms = <&L20 2 0>;
-			label = "LEDg";
+		ledg: led_g {
+			pwms = <&L19 2 0>;
+			label = "Green PWM LED";
 		};
-		ledb: led_21 {
-			pwms = <&L20 1 0>;
-			label = "LEDb";
+		ledb: led_b {
+			pwms = <&L19 1 0>;
+			label = "Blue PWM LED";
 		};
 	};
-	buttons {
-		compatible = "gpio-keys";
-		sw0: sw_0 {
-			/* gpio flags need validation */
-			gpios = <&L17 17 0>;
-			label = "BTN1";
-		};
+	chosen {
+		zephyr,console = &L10;
+		zephyr,shell-uart = &L10;
+		zephyr,sram = &L4;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &txtrom_partition;
 	};
 };
+

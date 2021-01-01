@@ -12,4 +12,7 @@ config PWM_SIFIVE
 	default y
 	depends on PWM
 
+config USE_DT_CODE_PARTITION
+	default y
+
 endif
